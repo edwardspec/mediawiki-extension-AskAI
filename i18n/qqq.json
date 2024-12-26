@@ -42,5 +42,8 @@
 	"askai-submit": "Label of Submit button on Special:AI.",
 	"askai-submit-failed": "Error message if HTTP POST request to Special:AI resulted in an error.",
 	"askai-unknown-service": "Error message if failed to create an AI service.",
-	"right-askai": "{{doc-right|askai}}\nAllows to use Special:AI."
+	"log-description-askai": "Text on top of [[Special:Log/askai]].",
+	"log-name-askai": "Log of AI-related actions",
+	"right-askai": "{{doc-right|askai}}\nAllows to use Special:AI.",
+	"right-askai-viewlog": "{{doc-right|askai-viewlog}}\nAllows to view the logs on Special:Log/askai."
 }

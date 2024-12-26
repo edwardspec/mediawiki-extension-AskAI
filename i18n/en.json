@@ -42,5 +42,8 @@
 	"askai-source": "(Source #$1) [$2]",
 	"askai-submit-failed": "HTTP error when submitting the form: $1",
 	"askai-unknown-service": "Not configured: incorrect value of $wgAskAIServiceClass.",
-	"right-askai": "Send queries to Special:AI."
+	"log-description-askai": "Below is the list of AI queries and AI-related actions requested by users.",
+	"log-name-askai": "AI log",
+	"right-askai": "Send queries to Special:AI.",
+	"right-askai-viewlog": "Read AI-related logs."
 }

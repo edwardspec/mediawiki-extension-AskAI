@@ -23,11 +23,10 @@
 
 namespace MediaWiki\AskAI;
 
-use FormatJson;
+use ManualLogEntry;
 use MediaWiki\AskAI\Service\IExternalService;
 use MediaWiki\AskAI\Service\ServiceFactory;
-use MediaWiki\Logger\LoggerFactory;
-use Psr\Log\LoggerInterface;
+use SpecialPage;
 use Status;
 use User;
 
@@ -41,9 +40,6 @@ class AIQuery {
 	/** @var IExternalService */
 	protected $service;
 
-	/** @var LoggerInterface */
-	protected $logger;
-
 	/** @var string */
 	protected $instructions;
 
@@ -56,7 +52,6 @@ class AIQuery {
 	public function __construct( User $user ) {
 		$this->user = $user;
 		$this->service = ServiceFactory::getAI();
-		$this->logger = LoggerFactory::getInstance( 'AskAI' );
 		$this->status = Status::newGood();
 	}
 
@@ -106,18 +101,19 @@ class AIQuery {
 			$this->status
 		);
 
-		$this->logger->error( 'AskAI: query by User:{user} ({ip}): {params}',
-			[
-				'user' => $this->user->getName(),
-				'ip' => $this->user->getRequest()->getIP(),
-				'params' => FormatJson::encode( [
-					'prompt' => $prompt,
-					'error' => $this->status->isOK() ? '' : $this->status->getMessage()->plain(),
-					'response' => $response ?? '',
-					'instructions' => $instructions
-				] )
-			]
-		);
+		// Log the result.
+		$logEntry = new ManualLogEntry( 'askai', 'query' );
+		$logEntry->setPerformer( $this->user );
+		$logEntry->setTarget( SpecialPage::getTitleFor( 'AI' ) );
+		$logEntry->setParameters( [
+			'prompt' => $prompt,
+
+			// TODO: shorten the log by providing setInstructionsPage() and writing only the title.
+			'instructions' => $instructions
+		] );
+
+		$logid = $logEntry->insert();
+		$logEntry->publish( $logid );
 
 		return $response;
 	}

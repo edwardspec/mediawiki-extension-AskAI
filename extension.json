@@ -10,11 +10,13 @@
 	},
 	"type": "other",
 	"AvailableRights": [
-		"askai"
+		"askai",
+		"askai-viewlog"
 	],
 	"GroupPermissions": {
 		"sysop": {
-			"askai": true
+			"askai": true,
+			"askai-viewlog": true
 		}
 	},
 	"RateLimits": {
@@ -28,6 +30,7 @@
 	"AutoloadClasses": {
 		"MediaWiki\\AskAI\\AIQuery": "includes/AIQuery.php",
 		"MediaWiki\\AskAI\\ApiQueryAskAI": "includes/api/ApiQueryAskAI.php",
+		"MediaWiki\\AskAI\\AskAILogFormatter": "includes/AskAILogFormatter.php",
 		"MediaWiki\\AskAI\\Hooks": "includes/Hooks.php",
 		"MediaWiki\\AskAI\\SpecialAI": "includes/SpecialAI.php",
 		"MediaWiki\\AskAI\\Service\\IExternalService": "includes/Service/IExternalService.php",
@@ -187,6 +190,15 @@
 		"askai": {
 			"class": "MediaWiki\\AskAI\\ApiQueryAskAI"
 		}
+	},
+	"LogTypes": [
+		"askai"
+	],
+	"LogRestrictions": {
+		"askai": "askai-viewlog"
+	},
+	"LogActionsHandlers": {
+		"askai/*": "MediaWiki\\AskAI\\AskAILogFormatter"
 	},
 	"manifest_version": 2
 }
